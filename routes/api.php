@@ -24,5 +24,5 @@ Route::prefix('v1')->middleware(['api','auth:sanctum'])->group(function () {
     Route::apiResource('categories', CategoryController::class)->only(['index']);
 
     Route::post('expenses/import', [ExpenseController::class, 'storeUsingExcel']);
-    Route::apiResource('expenses', ExpenseController::class)->only(['index', 'store']);
+    Route::apiResource('expenses', ExpenseController::class)->only(['index', 'store', 'update']);
 });

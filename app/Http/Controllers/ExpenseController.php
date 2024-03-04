@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreExpenseRequest;
 use App\Http\Requests\StoreExpenseUsingExcelRequest;
+use App\Http\Requests\UpdateExpenseRequest;
 use App\Jobs\ImportExpensesExcelJob;
 use App\Models\Expense;
 use Illuminate\Http\Request;
@@ -58,13 +59,15 @@ class ExpenseController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  UpdateExpenseRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateExpenseRequest $request, $id)
     {
-        //
+        $expense = Expense::findOrFail($id);
+        $expense->update($request->all());
+        return Response($expense, 200);
     }
 
     /**
