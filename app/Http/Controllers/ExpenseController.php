@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreExpenseRequest;
+use App\Http\Requests\StoreExpenseUsingExcelRequest;
+use App\Imports\ExpensesImport;
 use App\Models\Expense;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ExpenseController extends Controller
 {
@@ -32,6 +35,15 @@ class ExpenseController extends Controller
         $expense->user_id = auth()->user()->id;
         $expense->save();
         return Response($expense, 201);
+    }
+
+    public function storeUsingExcel(StoreExpenseUsingExcelRequest $request)
+    {
+
+        $excel = request()->file('file');
+        Excel::import(new ExpensesImport, $excel);
+
+        return Response(['message' => 'Expenses imported successfully'], 201);
     }
 
     /**
