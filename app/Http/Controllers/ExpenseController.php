@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreExpenseRequest;
 use App\Http\Requests\StoreExpenseUsingExcelRequest;
-use App\Imports\ExpensesImport;
+use App\Jobs\ImportExpensesExcelJob;
 use App\Models\Expense;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
 
 class ExpenseController extends Controller
 {
@@ -39,11 +38,10 @@ class ExpenseController extends Controller
 
     public function storeUsingExcel(StoreExpenseUsingExcelRequest $request)
     {
+        $excel = $request->file('file')->store('excels');
+        ImportExpensesExcelJob::dispatch($excel, auth()->user()->id);
 
-        $excel = request()->file('file');
-        Excel::import(new ExpensesImport, $excel);
-
-        return Response(['message' => 'Expenses imported successfully'], 201);
+        return Response(['message' => 'Importing expenses...'], 201);
     }
 
     /**

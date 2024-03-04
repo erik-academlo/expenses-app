@@ -10,6 +10,12 @@ use Maatwebsite\Excel\Concerns\WithStartRow;
 
 class ExpensesImport implements ToModel, WithStartRow
 {
+    protected $userId;
+    public function __construct(int $userId)
+    {
+        $this->userId = $userId;
+    }
+
     /**
     * @param array $row
     *
@@ -31,7 +37,7 @@ class ExpensesImport implements ToModel, WithStartRow
             'category_id' => $categoryId,
         ]);
 
-        $expense->user_id = auth()->user()->id;
+        $expense->user_id = $this->userId;
 
         return $expense;
     }
