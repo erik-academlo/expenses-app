@@ -3,12 +3,14 @@
 namespace App\Jobs;
 
 use App\Imports\ExpensesImport;
+use App\Mail\ExcelUploaded;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ImportExpensesExcelJob implements ShouldQueue
@@ -16,16 +18,16 @@ class ImportExpensesExcelJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $file;
-    protected $userId;
+    protected $user;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($file, $userId)
+    public function __construct($file, $user)
     {
         $this->file = $file;
-        $this->userId = $userId;
+        $this->user = $user;
     }
 
     /**
@@ -35,7 +37,9 @@ class ImportExpensesExcelJob implements ShouldQueue
      */
     public function handle()
     {
-        $import = new ExpensesImport($this->userId);
+        $import = new ExpensesImport($this->user->id);
         Excel::import($import, $this->file);
+
+        Mail::to($this->user->email)->send(new ExcelUploaded($this->user));
     }
 }

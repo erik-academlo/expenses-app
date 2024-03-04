@@ -39,7 +39,7 @@ class ExpenseController extends Controller
     public function storeUsingExcel(StoreExpenseUsingExcelRequest $request)
     {
         $excel = $request->file('file')->store('excels');
-        ImportExpensesExcelJob::dispatch($excel, auth()->user()->id);
+        ImportExpensesExcelJob::dispatch($excel, auth()->user());
 
         return Response(['message' => 'Importing expenses...'], 201);
     }
