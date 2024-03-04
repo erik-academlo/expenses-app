@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +13,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('auth/login');
+});
+
+Route::middleware(['guest'])->group(function () {
+    Route::view('auth/login', 'auth.login')->name('login');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::view('expenses', 'expenses.index')->name('expenses.index');
 });
