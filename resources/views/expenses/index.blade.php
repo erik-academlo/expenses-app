@@ -2,9 +2,12 @@
 @section('content')
     <div id="expensesList" class="row justify-content-center">
         <div class="col-md-8">
-            <div class="text-end">
-                <button class="btn btn-primary my-2" @click="triggerFileInput">Cargar Excel</button>
-                <input class="d-none" type="file" id="fileInput" ref="fileInput" @change="handleFileUpload" accept=".xls,.xlsx,.xlsm,.xlsb,.xlt,.xltm,.xltx,.xla,.xlam,.xll,.xlw">
+            <div class="d-flex justify-content-between align-items-end">
+                <p class="text-center">@{{ expenses.total }} gastos en total</p>
+                <div class="text-end">
+                    <button class="btn btn-primary my-2" @click="triggerFileInput">Cargar Excel</button>
+                    <input class="d-none" type="file" id="fileInput" ref="fileInput" @change="handleFileUpload" accept=".xls,.xlsx,.xlsm,.xlsb,.xlt,.xltm,.xltx,.xla,.xlam,.xll,.xlw">
+                </div>
             </div>
             <div class="card shadow border-0">
                 <div class="card-body">
