@@ -23,4 +23,5 @@ Route::middleware(['guest'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::view('expenses', 'expenses.index')->name('expenses.index');
+    Route::view('stats', 'expenses.stats')->name('expenses.stats');
 });

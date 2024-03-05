@@ -24,7 +24,10 @@
         <div class="collapse navbar-collapse" id="navbarScroll">
             <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/expenses">Home</a>
+                    <a class="nav-link active" aria-current="page" href="/expenses">Gastos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/stats">Estadísticas</a>
                 </li>
             </ul>
             <form action="/api/v1/logout" method="post">

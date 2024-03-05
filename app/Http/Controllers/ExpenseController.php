@@ -45,6 +45,17 @@ class ExpenseController extends Controller
         return Response(['message' => 'Importing expenses...'], 201);
     }
 
+    public function count()
+    {
+        // improves performance querying the database instead of using the Eloquent ORM and loading all the records into memory
+        $user = auth()->user();
+        $result = $user->expenses()
+            ->join('categories', 'expenses.category_id', '=', 'categories.id')
+            ->selectRaw('categories.name, COUNT(*) as total')
+            ->groupBy('categories.name')
+            ->pluck('total', 'categories.name');
+        return Response($result, 200);
+    }
     /**
      * Display the specified resource.
      *
