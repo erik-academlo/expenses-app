@@ -24,12 +24,13 @@
         <div class="collapse navbar-collapse" id="navbarScroll">
             <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/expenses">Gastos</a>
+                    <a class="nav-link" href="/expenses">Gastos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/stats">Estadísticas</a>
+                    <a class="nav-link" href="/stats">Estadísticas</a>
                 </li>
             </ul>
+            <span class="me-3">{{ auth()->user()->email }}</span>
             <form action="/api/v1/logout" method="post">
                 @csrf
                 <button class="btn btn-outline-success" type="submit">Log out</button>
