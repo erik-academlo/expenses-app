@@ -11,13 +11,13 @@
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>Expense</th>
-                            <th>Amount</th>
-                            <th>Date</th>
-                            <th>Category</th>
+                            <th>Gasto</th>
+                            <th>Monto</th>
+                            <th>Fecha</th>
+                            <th>Categoría</th>
                         </thead>
                         <tbody>
-                        <tr v-for="expense in expenses">
+                        <tr v-for="expense in expenses.data">
                             <td>@{{ expense.name }}</td>
                             <td>@{{ expense.amount }}</td>
                             <td>@{{ expense.date }}</td>
@@ -31,6 +31,16 @@
                     </table>
                 </div>
             </div>
+            <nav class="mt-3">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" :class="!expenses.prev_page_url ? 'disabled' : ''">
+                        <button class="page-link" @click="getExpenses(expenses.prev_page_url)">Previous</button>
+                    </li>
+                    <li class="page-item" :class="!expenses.next_page_url ? 'disabled' : ''">
+                        <button class="page-link" @click="getExpenses(expenses.next_page_url)">Next</button>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
 @endsection
@@ -39,12 +49,12 @@
         const app = new Vue({
             el: '#expensesList',
             data: {
-                expenses: [],
+                expenses: {},
                 categories: [],
             },
             methods: {
-                getExpenses() {
-                    axios.get('/api/v1/expenses')
+                getExpenses(endpoint = '/api/v1/expenses') {
+                    axios.get(endpoint)
                         .then(response => {
                             this.expenses = response.data;
                         }).catch(() => {
