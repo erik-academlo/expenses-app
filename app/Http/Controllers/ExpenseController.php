@@ -19,7 +19,7 @@ class ExpenseController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $expenses = $user->expenses()->paginate(10);
+        $expenses = $user->expenses()->orderBy('created_at', 'desc')->paginate(10);
         return Response($expenses, 200);
     }
 
