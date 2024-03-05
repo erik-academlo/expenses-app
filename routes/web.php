@@ -18,6 +18,7 @@ Route::get('/', function () {
 
 Route::middleware(['guest'])->group(function () {
     Route::view('auth/login', 'auth.login')->name('login');
+    Route::view('auth/register', 'auth.register')->name('register');
 });
 
 Route::middleware(['auth'])->group(function () {
