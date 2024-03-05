@@ -11,9 +11,11 @@ use Maatwebsite\Excel\Concerns\WithStartRow;
 class ExpensesImport implements ToModel, WithStartRow
 {
     protected $userId;
+    protected $categories;
     public function __construct(int $userId)
     {
         $this->userId = $userId;
+        $this->categories = Category::all();
     }
 
     /**
@@ -24,8 +26,7 @@ class ExpensesImport implements ToModel, WithStartRow
     public function model(array $row)
     {
         if (!$this->rowHasAllValues($row)) { return null; }
-
-        $categoryId = Category::where('name', 'Sin categoría')->first()->id;
+        $categoryId = $this->matchCategory($row[3]);
 
         // Convert the Excel serial number to a date
         $date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[2]);
@@ -53,5 +54,14 @@ class ExpensesImport implements ToModel, WithStartRow
             return false;
         }
         return true;
+    }
+
+    private function matchCategory($categoryName)
+    {
+        $category = $this->categories->firstWhere('name', $categoryName);
+        if ($category) {
+            return $category->id;
+        }
+        return $this->categories->firstWhere('name', 'Sin categoría')->id;
     }
 }
