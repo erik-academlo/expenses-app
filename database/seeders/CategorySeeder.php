@@ -15,7 +15,7 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        $categories = ['Restaurante',  'Cine', 'Carro', 'Mantenimiento auto', 'Iphone 15', 'Linea telefonica', 'Internet', 'Agua', 'Luz', 'Netflix', 'Walmart', 'Costco', 'Regalandote', 'Sin categoría'];
+        $categories = ['Servicios', 'Entretenimiento', 'Alimentacion', 'Ropa', 'Cuidado personal', 'Regalos', 'Sin categoría'];
 
         foreach ($categories as $category) {
             Category::firstOrCreate(['name' => $category]);
