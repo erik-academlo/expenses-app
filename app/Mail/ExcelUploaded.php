@@ -18,9 +18,10 @@ class ExcelUploaded extends Mailable
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($user, $categoryCounts)
     {
         $this->user = $user;
+        $this->categoryCounts = $categoryCounts;
     }
 
     /**
@@ -46,6 +47,7 @@ class ExcelUploaded extends Mailable
             markdown: 'mail.queues.excel-imported',
             with: [
                 'user' => $this->user,
+                'categoryCounts' => $this->categoryCounts,
             ],
         );
     }

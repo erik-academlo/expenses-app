@@ -40,6 +40,8 @@ class ImportExpensesExcelJob implements ShouldQueue
         $import = new ExpensesImport($this->user->id);
         Excel::import($import, $this->file);
 
-        Mail::to($this->user->email)->send(new ExcelUploaded($this->user));
+        $categoryCounts = $import->categoryCounts;
+
+        Mail::to($this->user->email)->send(new ExcelUploaded($this->user, $categoryCounts));
     }
 }
