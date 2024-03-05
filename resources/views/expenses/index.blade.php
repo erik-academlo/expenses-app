@@ -18,9 +18,9 @@
                         </thead>
                         <tbody>
                         <tr v-for="expense in expenses">
-                            <td>Gas</td>
-                            <td>100</td>
-                            <td>2021-10-10</td>
+                            <td>@{{ expense.name }}</td>
+                            <td>@{{ expense.amount }}</td>
+                            <td>@{{ expense.date }}</td>
                             <td>
                                 <select @change="updateExpenseCategory(expense)" class="form-select" v-model="expense.category_id">
                                     <option v-for="category in categories" :key="category.id" :value="category.id">@{{ category.name }}</option>
@@ -77,7 +77,7 @@
 
                     axios.post('/api/v1/expenses/import', formData)
                         .then(() => {
-                            alert('Estamos procesando tu archivo, te enviaremos un correo cuando esté listo. Puedes seguir trabajando en otras cosas mientras tanto.
+                            alert('Estamos procesando tu archivo, te enviaremos un correo cuando esté listo. Puedes seguir trabajando en otras cosas mientras tanto.');
                             this.getExpenses();
                         }).catch(() => {
                             alert('No pudimos importar los gastos');
